@@ -47,10 +47,11 @@ class Worker implements Runnable {
 }
 
 public class TcpServer2 {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
+        ServerSocket serverSocket = null;
         try {
             // tcp socket
-            ServerSocket serverSocket = new ServerSocket(8001);
+            serverSocket = new ServerSocket(8001);
             while (true) {
                 // blocked, waiting for client connection.
                 Socket socket = serverSocket.accept();
@@ -61,6 +62,10 @@ public class TcpServer2 {
             }
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            if (serverSocket != null) {
+                serverSocket.close();
+            }
         }
     }
 }

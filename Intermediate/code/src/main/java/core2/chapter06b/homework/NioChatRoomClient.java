@@ -38,7 +38,7 @@ public class NioChatRoomClient {
             selector = Selector.open();
             channel = SocketChannel.open();
             channel.configureBlocking(false);
-            if (channel.connect(new InetSocketAddress("localhost", 8001))) {
+            if (channel.connect(new InetSocketAddress("localhost", port))) {
                 channel.register(selector, SelectionKey.OP_READ);
                 startChatTask();
             } else {

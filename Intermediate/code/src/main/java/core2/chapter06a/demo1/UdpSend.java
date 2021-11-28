@@ -21,5 +21,6 @@ class UdpSend {
         String messageContent = new String(packet1.getData(), 0, packet1.getLength());
         String messageSenderAddress = new String(packet1.getAddress() + ":" + packet1.getPort());
         System.out.println("UdpSender: received a msg: " + messageContent + " from " + messageSenderAddress);
+        socket.close();
     }
 }

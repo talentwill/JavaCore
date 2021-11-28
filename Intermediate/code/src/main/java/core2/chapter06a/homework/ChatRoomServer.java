@@ -2,6 +2,7 @@ package core2.chapter06a.homework;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.ServerSocket;
@@ -75,14 +76,15 @@ class MessageForwarder {
 }
 
 public class ChatRoomServer {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         int port = 8001;
+        ServerSocket serverSocket = null;
         try {
             int clientId = 1;
             MessageForwarder messageForwarder = new MessageForwarder();
 
             // initialize server socket
-            ServerSocket serverSocket = new ServerSocket(port);
+            serverSocket = new ServerSocket(port);
 
             while (true) {
                 Socket clientSocket = serverSocket.accept();
@@ -91,8 +93,13 @@ public class ChatRoomServer {
                 messageForwarder.addClient(client);
                 new Thread(client).start();
             }
+
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            if (serverSocket != null) {
+                serverSocket.close();
+            }
         }
     }
 }
